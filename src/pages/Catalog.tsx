@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, RefreshCw } from 'lucide-react';
 import { useCart } from '../store/useCart';
 import { fetchPublicProducts } from '../lib/supabase';
 
@@ -21,21 +21,29 @@ export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await fetchPublicProducts();
+      setProducts(data);
+    } catch (err) {
+      console.error('Error loading products:', err);
+      setError('Failed to load products');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await loadProducts();
+    setRefreshing(false);
+  };
 
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchPublicProducts();
-        setProducts(data);
-      } catch (err) {
-        console.error('Error loading products:', err);
-        setError('Failed to load products');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadProducts();
   }, []);
 
@@ -66,12 +74,37 @@ export default function Catalog() {
   return (
     <div style={{ padding: '24px', backgroundColor: '#F7F2E8', minHeight: 'calc(100vh - 70px)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '32px', fontWeight: 700, color: '#18212F', fontFamily: 'Georgia, serif', marginBottom: '8px' }}>
-          Catalog
-        </h1>
-        <p style={{ fontSize: '14px', color: '#6B7280', marginBottom: '28px' }}>
-          Browse our collection of rare trading cards ({products.length} available)
-        </p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '28px' }}>
+          <div>
+            <h1 style={{ fontSize: '32px', fontWeight: 700, color: '#18212F', fontFamily: 'Georgia, serif', marginBottom: '8px' }}>
+              Catalog
+            </h1>
+            <p style={{ fontSize: '14px', color: '#6B7280', margin: 0 }}>
+              Browse our collection of rare trading cards ({products.length} available)
+            </p>
+          </div>
+          <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '10px 16px',
+              backgroundColor: '#1F6FAF',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: refreshing ? 'not-allowed' : 'pointer',
+              fontWeight: 600,
+              fontSize: '14px',
+              opacity: refreshing ? 0.7 : 1,
+            }}
+          >
+            <RefreshCw size={16} style={{ animation: refreshing ? 'spin 1s linear infinite' : 'none' }} />
+            {refreshing ? 'Refreshing...' : 'Refresh'}
+          </button>
+        </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
           {products.map((product) => (
