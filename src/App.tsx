@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div style={{ backgroundColor: '#F7F2E8', minHeight: '100vh' }}>
+        <div style={{ backgroundColor: '#080A0F', minHeight: '100vh', color: '#F5F7FA' }}>
           <Header />
           <Routes>
             <Route path="/" element={<Catalog />} />
