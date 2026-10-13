@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://qbxhzqxagqpgrsvtwjbo.supabase.co';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFieHhacXhhZ3FwZ3JzdnR3amJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTkyMzk2NjAsImV4cCI6MjAzNDgxOTY2MH0.Hq8LWvn5pFGp96hMDC7WMhRfNiXHRQq0XpHXYMEUFg0';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://lkhxvfcaiokeqkishyvu.supabase.co';
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxraHh2ZmNhaW9rZXFraXNoeXZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0Mzg2NDEsImV4cCI6MjA5OTAxNDY0MX0.j1lh4nFJb74hKwhRyj2D0VwmJt1NjHPzieAsKa43j8Y';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -15,10 +15,13 @@ export async function fetchPublicProducts() {
     const response = await fetch('https://atlas-stock-manager.vercel.app/api/public-products');
     
     if (!response.ok) {
-      throw new Error('Failed to fetch products');
+      const errorText = await response.text();
+      console.error('API error:', response.status, errorText);
+      throw new Error(`API returned ${response.status}: ${errorText}`);
     }
 
     const data = await response.json();
+    console.log('Fetched products:', data);
     return data.products || [];
   } catch (error) {
     console.error('Error fetching products:', error);
