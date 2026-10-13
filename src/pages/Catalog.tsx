@@ -10,9 +10,11 @@ interface Product {
   price: number;
   condition: string;
   grade: string;
+  gradingCompany?: string;
   quantity: number;
-  image?: string;
+  images?: string[] | null;
   category: string;
+  productType: string;
 }
 
 export default function Catalog() {
@@ -138,8 +140,17 @@ export default function Catalog() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '80px',
+                overflow: 'hidden',
               }}>
-                {product.image || '🎴'}
+                {product.images && product.images.length > 0 ? (
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  '🎴'
+                )}
               </div>
 
               {/* Content */}
@@ -154,7 +165,9 @@ export default function Catalog() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <div>
                     <span style={{ fontSize: '10px', color: '#6B7280', display: 'block', marginBottom: '2px' }}>Grade</span>
-                    <span style={{ fontSize: '14px', fontWeight: 700, color: '#D96C2C' }}>PSA {product.grade}</span>
+                    <span style={{ fontSize: '14px', fontWeight: 700, color: '#D96C2C' }}>
+                      {product.gradingCompany ? `${product.gradingCompany} ${product.grade}` : product.grade !== 'Ungraded' ? product.grade : 'Not Graded'}
+                    </span>
                   </div>
                   <div style={{ textAlign: 'right' }}>
                     <span style={{ fontSize: '10px', color: '#6B7280', display: 'block', marginBottom: '2px' }}>Condition</span>
