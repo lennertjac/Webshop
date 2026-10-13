@@ -13,6 +13,7 @@ interface Product {
   gradingCompany?: string;
   quantity: number;
   images?: string[] | null;
+  cardImage?: string | null;
   category: string;
   productType: string;
 }
@@ -145,6 +146,12 @@ export default function Catalog() {
                 {product.images && product.images.length > 0 ? (
                   <img
                     src={product.images[0]}
+                    alt={product.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : product.cardImage ? (
+                  <img
+                    src={product.cardImage}
                     alt={product.name}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />

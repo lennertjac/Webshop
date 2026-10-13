@@ -13,6 +13,7 @@ interface Product {
   gradingCompany?: string;
   quantity: number;
   images?: string[] | null;
+  cardImage?: string | null;
   category: string;
   productType: string;
 }
@@ -106,6 +107,12 @@ export default function ProductDetail() {
                 alt={product.name}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
+            ) : product.cardImage ? (
+              <img
+                src={product.cardImage}
+                alt={product.name}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             ) : (
               '🎴'
             )}
@@ -157,18 +164,27 @@ export default function ProductDetail() {
             </div>
 
             {/* Additional images gallery */}
-            {product.images && product.images.length > 1 && (
+            {((product.images && product.images.length > 1) || (product.cardImage && (!product.images || product.images.length === 0))) && (
               <div style={{ marginBottom: '24px' }}>
                 <h3 style={{ fontSize: '14px', fontWeight: 700, color: '#18212F', margin: '0 0 12px' }}>More Photos</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '12px' }}>
-                  {product.images.slice(1).map((img, idx) => (
-                    <img
-                      key={idx}
-                      src={img}
-                      alt={`${product.name} ${idx + 2}`}
-                      style={{ width: '100%', height: '100px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #DDD2C2', cursor: 'pointer' }}
-                    />
-                  ))}
+                  {product.images && product.images.length > 1 
+                    ? product.images.slice(1).map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={img}
+                          alt={`${product.name} ${idx + 2}`}
+                          style={{ width: '100%', height: '100px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #DDD2C2', cursor: 'pointer' }}
+                        />
+                      ))
+                    : product.cardImage && (
+                        <img
+                          src={product.cardImage}
+                          alt={`${product.name} card`}
+                          style={{ width: '100%', height: '100px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #DDD2C2', cursor: 'pointer' }}
+                        />
+                      )
+                  }
                 </div>
               </div>
             )}
