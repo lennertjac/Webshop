@@ -37,8 +37,6 @@ const COLUMNS = [
       ['Pokémon', '/collections/pokemon'],
       ['Riftbound', '/collections/riftbound'],
       ['One Piece', '/collections/one-piece'],
-      ['Magic: The Gathering', '/collections/magic-the-gathering'],
-      ['Other TCGs', '/collections/other-tcgs'],
     ],
   },
   {
@@ -69,7 +67,7 @@ export function Footer() {
         <div>
           <Logo tone="light" />
           <p className="mt-4 max-w-xs font-sans text-sm leading-relaxed text-ivory/70">
-            Rare singles, graded cards, sealed products and collector pieces – sourced, checked and shipped with care.
+            Rare singles, graded relics and sealed treasures – hunted down, examined and shipped with care.
           </p>
         </div>
         {COLUMNS.map((col) => (

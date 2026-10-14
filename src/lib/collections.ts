@@ -11,8 +11,6 @@ export type SceneVariant =
   | 'pokemon'
   | 'riftbound'
   | 'one-piece'
-  | 'magic'
-  | 'other'
   | 'vault'
   | 'story'
   | 'sell'
@@ -33,8 +31,7 @@ export const TCG_META: Record<TcgId, { label: string; slug: string }> = {
   pokemon: { label: 'Pokémon', slug: 'pokemon' },
   riftbound: { label: 'Riftbound', slug: 'riftbound' },
   'one-piece': { label: 'One Piece', slug: 'one-piece' },
-  magic: { label: 'Magic: The Gathering', slug: 'magic-the-gathering' },
-  other: { label: 'Other TCGs', slug: 'other-tcgs' },
+  other: { label: 'Other', slug: 'shop' },
 };
 
 export function detectTcg(category: string | null | undefined): TcgId {
@@ -42,16 +39,15 @@ export function detectTcg(category: string | null | undefined): TcgId {
   if (c.includes('pok')) return 'pokemon';
   if (c.includes('rift')) return 'riftbound';
   if (c.includes('one piece')) return 'one-piece';
-  if (c.includes('magic')) return 'magic';
   return 'other';
 }
 
-const tcgCollection = (id: TcgId, flavour: string, description: string): Collection => ({
+const tcgCollection = (id: Exclude<TcgId, 'other'>, flavour: string, description: string): Collection => ({
   slug: TCG_META[id].slug,
   title: TCG_META[id].label,
   flavour,
   description,
-  scene: id === 'other' ? 'other' : id,
+  scene: id,
   match: (p) => p.tcg === id,
 });
 
@@ -60,7 +56,7 @@ export const COLLECTIONS: Collection[] = [
     slug: 'cards',
     title: 'Trading Cards',
     flavour: 'The Open Road',
-    description: 'Singles and graded cards from every TCG we stock.',
+    description: 'Singles and graded cards from every world we stock.',
     scene: 'catalog',
     match: (p) => p.kind === 'single' || p.kind === 'graded',
   },
@@ -68,7 +64,7 @@ export const COLLECTIONS: Collection[] = [
     slug: 'singles',
     title: 'Singles',
     flavour: 'The Wayfarer’s Shelf',
-    description: 'Individual raw cards, condition-checked and carefully sleeved.',
+    description: 'Hand-checked cards, each one sleeved and ready to join your hoard.',
     scene: 'singles',
     match: (p) => p.kind === 'single',
   },
@@ -76,7 +72,7 @@ export const COLLECTIONS: Collection[] = [
     slug: 'graded',
     title: 'Graded Cards',
     flavour: 'The Grand Archive',
-    description: 'Slabbed cards graded by PSA, CGC, BGS and other trusted companies.',
+    description: 'Sealed in slabs by PSA, CGC, BGS and other trusted guardians – grades clearly shown.',
     scene: 'archive',
     match: (p) => p.kind === 'graded',
   },
@@ -84,7 +80,7 @@ export const COLLECTIONS: Collection[] = [
     slug: 'sealed',
     title: 'Sealed Products',
     flavour: 'Expedition Supplies',
-    description: 'Booster boxes, packs, decks and collections – factory sealed.',
+    description: 'Sealed relics from the vault: packs, boxes, cases and decks, factory sealed.',
     scene: 'supply',
     match: (p) => p.kind === 'sealed',
   },
@@ -92,7 +88,7 @@ export const COLLECTIONS: Collection[] = [
     slug: 'new-arrivals',
     title: 'New Arrivals',
     flavour: 'Recently Discovered',
-    description: 'The latest cards and products added to the store.',
+    description: 'Fresh discoveries from our latest expeditions.',
     scene: 'gateway',
     match: (p) => p.isNew,
   },
@@ -100,7 +96,7 @@ export const COLLECTIONS: Collection[] = [
     slug: 'bundles',
     title: 'Collections',
     flavour: 'Curated Sets',
-    description: 'Sets of cards, sealed product and accessories that are sold together.',
+    description: 'Curated hoards of cards, sealed product and gear, gathered to be claimed together.',
     scene: 'story',
     match: (p) => p.kind === 'collection',
   },
@@ -108,20 +104,18 @@ export const COLLECTIONS: Collection[] = [
     slug: 'accessories',
     title: 'Accessories',
     flavour: 'The Gear Shop',
-    description: 'Binders, sleeves, playmats and other collector gear.',
+    description: 'Binders, sleeves and playmats – gear for every collector’s journey.',
     scene: 'supply',
     match: (p) => p.kind === 'accessory',
   },
-  tcgCollection('pokemon', 'The Sunlit Meadows', 'Singles, graded cards and sealed product for Pokémon TCG.'),
-  tcgCollection('riftbound', 'The Arcane Citadel', 'Signed showcases, alt-arts and sealed Riftbound product.'),
-  tcgCollection('one-piece', 'The Open Seas', 'One Piece Card Game singles, boxes and graded cards.'),
-  tcgCollection('magic', 'The Ancient Ruins', 'Magic singles, sealed product and graded collectibles.'),
-  tcgCollection('other', 'Beyond the Map', 'Lorcana, Yu-Gi-Oh!, Digimon and more.'),
+  tcgCollection('pokemon', 'The Sunlit Meadows', 'Legends of the sunlit meadows: Pokémon singles, graded slabs and sealed product.'),
+  tcgCollection('riftbound', 'The Arcane Citadel', 'Relics of the arcane citadel: signed showcases, alt-arts and sealed Riftbound product.'),
+  tcgCollection('one-piece', 'The Open Seas', 'Treasures of the open seas: One Piece singles, boxes and graded cards.'),
 ];
 
 export const getCollection = (slug: string) => COLLECTIONS.find((c) => c.slug === slug);
 
-export const TCG_SLUGS = ['pokemon', 'riftbound', 'one-piece', 'magic-the-gathering', 'other-tcgs'];
+export const TCG_SLUGS = ['pokemon', 'riftbound', 'one-piece'];
 
 export interface NavLink {
   href: string;

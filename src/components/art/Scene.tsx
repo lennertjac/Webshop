@@ -41,8 +41,6 @@ const CONFIG: Record<SceneVariant, SceneConfig> = {
   pokemon: { sky: ['#8ED2EE', '#D9F0E4', '#FDF1C9'], sun: { x: 940, y: 130, r: 56, color: '#FFF4C9' }, far: '#B8D4E4', mid: '#8BC0A8', near: '#4F9A73', elements: ['floating', 'waterfall', 'forest'] },
   riftbound: { sky: ['#4B4F9E', '#8E7BD0', '#F3CDAE'], sun: { x: 300, y: 190, r: 44, color: '#FFE7BE' }, far: '#6E69B4', mid: '#564F98', near: '#3A3677', elements: ['city', 'crystals', 'arch', 'runes'] },
   'one-piece': { sky: ['#F7A96B', '#FAD8A0', '#9AD6E6'], sun: { x: 820, y: 210, r: 70, color: '#FFF1BF' }, far: '#D9A27E', mid: '#7FB2C8', near: '#3F86A8', elements: ['sea', 'floating'] },
-  magic: { sky: ['#6FC1C3', '#BFE3D2', '#F2E7BC'], sun: { x: 700, y: 140, r: 48, color: '#F7F3C8' }, far: '#8CB9B3', mid: '#5E9F95', near: '#3E7B6C', elements: ['ruins', 'runes', 'crystals', 'forest'] },
-  other: { sky: ['#9AD0E4', '#D8EBD8', '#FBEFC9'], sun: { x: 540, y: 150, r: 46, color: '#FFF4C9' }, far: '#B9CFD9', mid: '#8FB5A4', near: '#4F9A73', elements: ['floating', 'forest'] },
   vault: { sky: ['#E5E0F2', '#C8D5F0', '#F7E7B7'], sun: { x: 600, y: 120, r: 70, color: '#FFFAE0' }, far: '#C7CBE3', mid: '#AEB6D8', near: '#8D96C0', elements: ['columns', 'arch', 'crystals', 'gold'] },
   story: { sky: ['#B5DDEB', '#F2E6C4', '#FBEBC8'], sun: { x: 260, y: 140, r: 46, color: '#FFF1BF' }, far: '#C6C9B8', mid: '#A5B59A', near: '#6F9A6F', elements: ['tents', 'forest', 'path'] },
   sell: { sky: ['#9CD0EC', '#D8E8F0', '#FBEBC8'], sun: { x: 900, y: 140, r: 50, color: '#FFF4C9' }, far: '#B6C8E2', mid: '#8DA8CC', near: '#5E9A78', elements: ['city', 'floating', 'crystals', 'forest'] },

@@ -3,9 +3,10 @@
 import { ImagePlus } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/Button';
+import { SELL_MIN_VALUE } from '@/lib/config';
 
 const input = 'h-11 w-full rounded-lg border border-stone bg-white px-3 font-sans text-sm text-ink focus:border-arcane';
-const TCGS = ['Pokémon', 'Riftbound', 'One Piece', 'Magic: The Gathering', 'Other'];
+const TCGS = ['Pokémon', 'Riftbound', 'One Piece', 'Other'];
 
 /** Shared by Contact and Sell to Us. Posts multipart form data to /api/inquiries. */
 export function InquiryForm({ type }: { type: 'sell' | 'contact' }) {
@@ -62,16 +63,17 @@ export function InquiryForm({ type }: { type: 'sell' | 'contact' }) {
           </div>
           <div>
             <label htmlFor="sell-value" className={label}>
-              Estimated value (€)
+              Market value per card (€)
             </label>
-            <input id="sell-value" name="estimatedValue" inputMode="decimal" className={input} />
+            <input id="sell-value" name="estimatedValue" inputMode="decimal" required className={input} placeholder={`${SELL_MIN_VALUE}+`} />
+            <p className="mt-1 font-sans text-xs text-muted">We buy cards worth €{SELL_MIN_VALUE} or more, in pristine condition.</p>
           </div>
         </div>
       )}
 
       <div>
         <label htmlFor={`${type}-message`} className={label}>
-          {sell ? 'Card / collection description' : 'Message'}
+          {sell ? 'Card / collection description (include condition and centering)' : 'Message'}
         </label>
         <textarea id={`${type}-message`} name="message" required rows={5} className="w-full rounded-lg border border-stone bg-white p-3 font-sans text-sm text-ink focus:border-arcane" />
       </div>
@@ -107,7 +109,7 @@ export function InquiryForm({ type }: { type: 'sell' | 'contact' }) {
       )}
 
       <Button type="submit" size="lg" variant={sell ? 'premium' : 'primary'} disabled={state.kind === 'sending'}>
-        {state.kind === 'sending' ? 'Sending…' : sell ? 'Submit Collection' : 'Send message'}
+        {state.kind === 'sending' ? 'Sending…' : sell ? 'Submit for an offer' : 'Send message'}
       </Button>
     </form>
   );

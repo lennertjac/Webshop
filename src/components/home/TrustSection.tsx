@@ -2,11 +2,11 @@ import { BadgeCheck, Lock, PackageCheck, ShieldCheck, Truck } from 'lucide-react
 import { Container, SectionHeading } from '@/components/ui/primitives';
 
 const ITEMS = [
-  { icon: BadgeCheck, title: 'Authenticity Guaranteed', text: 'Every card is checked before it is listed.' },
+  { icon: BadgeCheck, title: 'Authenticity Guaranteed', text: 'Every card is examined by hand before it earns a place here.' },
   { icon: Lock, title: 'Secure Payments', text: 'Encrypted checkout with trusted payment providers.' },
-  { icon: PackageCheck, title: 'Careful Packaging', text: 'Sleeved, toploaded and padded for the journey.' },
+  { icon: PackageCheck, title: 'Careful Packaging', text: 'Sleeved, toploaded and padded for the long journey.' },
   { icon: Truck, title: 'Tracked Shipping', text: 'Tracked and insured delivery options worldwide.' },
-  { icon: ShieldCheck, title: 'Trusted Grading Companies', text: 'PSA, CGC, BGS and more – grades clearly shown.' },
+  { icon: ShieldCheck, title: 'Trusted Grading Companies', text: 'PSA, CGC, BGS and more – every grade clearly shown.' },
 ];
 
 export function TrustSection() {

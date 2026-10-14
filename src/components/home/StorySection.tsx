@@ -16,7 +16,7 @@ export function StorySection() {
               Built for Collectors
             </h2>
             <p className="mt-4 font-sans text-base leading-relaxed text-ink/80">
-              Atlas goes searching for interesting cards, graded collectibles and sealed products so you don’t have to. Every piece is checked, photographed
+              Atlas ventures out in search of rare cards, graded relics and sealed treasures so you don’t have to. Each piece is examined, photographed
               and packed by collectors who care about condition as much as you do.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">

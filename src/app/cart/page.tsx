@@ -25,7 +25,7 @@ export default function CartPage() {
       <Container className="flex flex-col items-center gap-4 py-20 text-center">
         <ShoppingBag className="size-14 text-stone" aria-hidden />
         <h1 className="font-serif text-4xl font-bold">Your cart is empty</h1>
-        <p className="font-sans text-muted">Add a few cards and they will show up here.</p>
+        <p className="font-sans text-muted">Your satchel is empty. Add a card and it will appear here.</p>
         <ButtonLink href="/shop" size="lg">
           Shop all products
         </ButtonLink>

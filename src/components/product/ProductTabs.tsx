@@ -15,6 +15,14 @@ function Paragraphs({ items }: { items: string[] }) {
   );
 }
 
+/** Deep links for graders with a public cert lookup. */
+function certLink(company: string | null | undefined, cert: string): string | undefined {
+  const n = encodeURIComponent(cert.trim());
+  if (company === 'PSA') return `https://www.psacard.com/cert/${n}`;
+  if (company === 'CGC') return `https://www.cgccards.com/certlookup/${n}/`;
+  return undefined;
+}
+
 export function ProductTabs({ product }: { product: Product }) {
   const uid = useId();
   const [active, setActive] = useState(0);
@@ -31,6 +39,7 @@ export function ProductTabs({ product }: { product: Product }) {
       ['Condition', product.condition],
       ['Grading company', product.gradingCompany],
       ['Grade', product.grade],
+      ['Certificate number', product.certNumber],
     ] as const
   ).filter(([, v]) => v);
 
@@ -76,15 +85,42 @@ export function ProductTabs({ product }: { product: Product }) {
     {
       label: 'Collector Information',
       content: (
-        <Paragraphs
-          items={[
-            'Photos show the actual item where available. Ask us for additional high-resolution photos before buying – we are happy to help.',
-            'Every item is stored sleeved or in its original packaging and handled with clean hands. Sealed product is stored upright, away from light and moisture.',
-            ...(product.isGraded
-              ? [`Graded cards come in the sealed ${product.gradingCompany ?? 'grading company'} holder. You can verify the certification number on the grading company’s website.`]
-              : []),
-          ]}
-        />
+        <div className="space-y-4">
+          {product.conditionNote && (
+            <div>
+              <h3 className="font-sans text-sm font-bold text-navy">Condition report</h3>
+              <p className="mt-1 whitespace-pre-line">{product.conditionNote}</p>
+            </div>
+          )}
+          {product.provenance && (
+            <div>
+              <h3 className="font-sans text-sm font-bold text-navy">Provenance</h3>
+              <p className="mt-1 whitespace-pre-line">{product.provenance}</p>
+            </div>
+          )}
+          {product.certNumber && (
+            <div>
+              <h3 className="font-sans text-sm font-bold text-navy">Certificate</h3>
+              <p className="mt-1">
+                {product.gradingCompany ?? 'Grading company'} certificate <strong className="tabular-nums text-navy">{product.certNumber}</strong>
+                {certLink(product.gradingCompany, product.certNumber) && (
+                  <>
+                    {' · '}
+                    <a href={certLink(product.gradingCompany, product.certNumber)} target="_blank" rel="noopener noreferrer" className="font-semibold text-arcane hover:underline">
+                      Verify with {product.gradingCompany}
+                    </a>
+                  </>
+                )}
+              </p>
+            </div>
+          )}
+          <Paragraphs
+            items={[
+              'Photos show the actual item where available. Ask us for additional high-resolution photos before buying – we are happy to help.',
+              'Every item is stored sleeved or in its original packaging and handled with clean hands. Sealed product is stored upright, away from light and moisture.',
+            ]}
+          />
+        </div>
       ),
     },
   ];

@@ -9,6 +9,7 @@ import { PAYMENT_METHODS } from '@/lib/config';
 import type { Product } from '@/lib/types';
 import { useCart } from '@/store/cart';
 import { useAddToCart, WishlistButton } from './ProductActions';
+import { RequestToBuyPanel } from './RequestToBuyPanel';
 
 export function ProductPurchasePanel({ product }: { product: Product }) {
   const router = useRouter();
@@ -16,6 +17,8 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
   const add = useCart((s) => s.add);
   const [qty, setQty] = useState(1);
   const soldOut = product.availability === 'sold-out';
+
+  if (product.requestToBuy) return <RequestToBuyPanel product={product} />;
 
   return (
     <div className="space-y-5">

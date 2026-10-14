@@ -1,4 +1,4 @@
-import { LOW_STOCK_AT, NEW_ARRIVAL_DAYS, VAULT_MIN_PRICE, slugify } from '../config';
+import { LOW_STOCK_AT, NEW_ARRIVAL_DAYS, REQUEST_TO_BUY_FROM, slugify } from '../config';
 import { TCG_META, detectTcg } from '../collections';
 import type { Availability, Product, ProductKind, ProductTag } from '../types';
 import { DEMO_PRODUCTS } from './demo';
@@ -26,6 +26,11 @@ export interface AtlasProduct {
   compareAtPrice?: number | null;
   description?: string | null;
   sealedType?: string | null;
+  isVault?: boolean | null;
+  certNumber?: string | null;
+  conditionNote?: string | null;
+  provenance?: string | null;
+  requestOnly?: boolean | null;
   contents?: { name: string; quantity: number; type: string }[] | null;
 }
 
@@ -60,7 +65,7 @@ export function adaptProduct(raw: AtlasProduct): Product {
   const availability = availabilityOf(stock, kind);
   const created = raw.createdAt ? new Date(raw.createdAt) : null;
   const isNew = created ? Date.now() - created.getTime() < NEW_ARRIVAL_DAYS * 86_400_000 : false;
-  const isVault = raw.price >= VAULT_MIN_PRICE;
+  const isVault = Boolean(raw.isVault);
   const compareAtPrice = raw.compareAtPrice && raw.compareAtPrice > raw.price ? raw.compareAtPrice : undefined;
 
   const tags: ProductTag[] = [];
@@ -100,6 +105,10 @@ export function adaptProduct(raw: AtlasProduct): Product {
     isVault,
     createdAt: raw.createdAt ?? undefined,
     contents: raw.contents?.length ? raw.contents : undefined,
+    certNumber: raw.certNumber ?? undefined,
+    conditionNote: raw.conditionNote ?? undefined,
+    provenance: raw.provenance ?? undefined,
+    requestToBuy: Boolean(raw.requestOnly) || raw.price >= REQUEST_TO_BUY_FROM,
     description: raw.description ?? undefined,
   };
 }

@@ -30,6 +30,9 @@ export async function POST(request: Request) {
     if (!product || !Number.isInteger(qty) || qty < 1) {
       return NextResponse.json({ error: 'unavailable', message: 'One of the items in your cart is no longer available.' }, { status: 409 });
     }
+    if (product.requestToBuy) {
+      return NextResponse.json({ error: 'request_only', message: `“${product.name}” is sold by personal request. Please use Request to buy on its page.` }, { status: 409 });
+    }
     if (qty > product.stock) {
       return NextResponse.json({ error: 'stock', message: `Only ${product.stock} of “${product.name}” left in stock.` }, { status: 409 });
     }

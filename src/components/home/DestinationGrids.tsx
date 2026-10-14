@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { Scene } from '@/components/art/Scene';
 import { Container, SectionHeading } from '@/components/ui/primitives';
-import { COLLECTIONS, type Collection, type SceneVariant } from '@/lib/collections';
+import { COLLECTIONS, TCG_SLUGS, type Collection, type SceneVariant } from '@/lib/collections';
 import type { Product } from '@/lib/types';
 
 interface Tile {
@@ -51,7 +51,7 @@ export function CategoryGrid({ products }: { products: Product[] }) {
       const c = pick(slug);
       return { href: `/collections/${c.slug}`, title: c.title, flavour: c.flavour, description: c.description, scene: c.scene, count: countFor(c, products) };
     }),
-    { href: '/vault', title: 'The Vault', flavour: 'The Treasure Chamber', description: 'Rare and high-end pieces, from €250.', scene: 'vault', count: products.filter((p) => p.isVault).length },
+    { href: '/vault', title: 'The Vault', flavour: 'The Treasure Chamber', description: 'Our most special pieces, on display.', scene: 'vault', count: products.filter((p) => p.isVault).length },
   ];
   return (
     <section aria-label="Shop by Category" className="py-12 sm:py-16">
@@ -70,17 +70,17 @@ export function CategoryGrid({ products }: { products: Product[] }) {
 }
 
 export function TcgGrid({ products }: { products: Product[] }) {
-  const tcgs = ['pokemon', 'riftbound', 'one-piece', 'magic-the-gathering', 'other-tcgs'].map((s) => COLLECTIONS.find((c) => c.slug === s)!);
+  const tcgs = TCG_SLUGS.map((s) => COLLECTIONS.find((c) => c.slug === s)!);
   return (
     <section className="bg-parchment-grain py-12 sm:py-16">
       <Container>
         <SectionHeading title="Shop by TCG" eyebrow="Choose your world" />
-        <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
+        <ul className="grid gap-3 sm:grid-cols-3 sm:gap-4">
           {tcgs.map((c) => (
-            <li key={c.slug} className="max-lg:last:col-span-2">
+            <li key={c.slug}>
               <Link
                 href={`/collections/${c.slug}`}
-                className="group relative flex aspect-[4/5] h-full flex-col justify-end overflow-hidden rounded-2xl border border-stone/70 shadow-card transition-[transform,box-shadow,border-color] duration-200 hover:border-gold/70 hover:shadow-glow motion-safe:hover:-translate-y-1 max-lg:last:aspect-[16/7]"
+                className="group relative flex aspect-[16/10] h-full flex-col justify-end overflow-hidden rounded-2xl border border-stone/70 shadow-card transition-[transform,box-shadow,border-color] duration-200 hover:border-gold/70 hover:shadow-glow motion-safe:hover:-translate-y-1 sm:aspect-[4/5]"
               >
                 <div className="absolute inset-0 transition-transform duration-500 motion-safe:group-hover:scale-105">
                   <Scene variant={c.scene} />

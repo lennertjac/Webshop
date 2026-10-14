@@ -3,9 +3,13 @@ export const SITE_NAME = 'Atlas Cards';
 export const FREE_SHIPPING_THRESHOLD = 150;
 export const SHIPPING_FLAT_RATE = 6.95;
 export const INSURED_SHIPPING_EXTRA = 4.95;
-export const VAULT_MIN_PRICE = 250;
 export const NEW_ARRIVAL_DAYS = 21;
 export const LOW_STOCK_AT = 2;
+/** From this price, items use 'Request to buy' instead of instant checkout. */
+export const REQUEST_TO_BUY_FROM = 2500;
+export const REPLY_TIME = 'within 24 hours';
+/** Minimum market value per card we buy. */
+export const SELL_MIN_VALUE = 200;
 export const PAYMENT_METHODS = ['Visa', 'Mastercard', 'Bancontact', 'iDEAL', 'PayPal'];
 
 const eur = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR' });

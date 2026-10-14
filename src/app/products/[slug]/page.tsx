@@ -78,7 +78,7 @@ export default async function ProductPage({ params }: Params) {
       <Container className="py-6 sm:py-8">
         <Breadcrumbs
           className="mb-5"
-          items={[{ name: 'Home', href: '/' }, { name: 'Shop', href: '/shop' }, { name: product.tcgLabel, href: `/collections/${tcgSlug}` }, { name: product.name }]}
+          items={[{ name: 'Home', href: '/' }, { name: 'Shop', href: '/shop' }, { name: product.tcgLabel, href: product.tcg === 'other' ? '/shop' : `/collections/${tcgSlug}` }, { name: product.name }]}
         />
 
         <div className="grid gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
@@ -124,6 +124,12 @@ export default async function ProductPage({ params }: Params) {
                       <GradeBadge product={product} />
                     </dd>
                   </div>
+                  {product.certNumber && (
+                    <div>
+                      <dt className="text-xs text-muted">Certificate</dt>
+                      <dd className="font-semibold tabular-nums text-navy">{product.certNumber}</dd>
+                    </div>
+                  )}
                 </>
               )}
               <div>
@@ -135,7 +141,7 @@ export default async function ProductPage({ params }: Params) {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <Price product={product} size="lg" />
-                <p className="mt-1 font-sans text-xs text-muted">VAT included where applicable. Shipping calculated at checkout.</p>
+                <p className="mt-1 font-sans text-xs text-muted">{product.requestToBuy ? 'Insured shipping and payment details are confirmed personally.' : 'VAT included where applicable. Shipping calculated at checkout.'}</p>
               </div>
               <StockStatus product={product} detailed />
             </div>

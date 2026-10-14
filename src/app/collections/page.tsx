@@ -15,7 +15,7 @@ export default async function CollectionsIndex() {
   const products = await getProducts();
   return (
     <>
-      <PageHero title="Collections" flavour="Choose your destination" description="Browse by product type or by TCG." scene="gateway" crumbs={[{ name: 'Home', href: '/' }, { name: 'Collections' }]} />
+      <PageHero title="Collections" flavour="Choose your destination" description="Choose your path: browse by product type or by world." scene="gateway" crumbs={[{ name: 'Home', href: '/' }, { name: 'Collections' }]} />
       <Container className="py-10">
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {COLLECTIONS.map((c) => (

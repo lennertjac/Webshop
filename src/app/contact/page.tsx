@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: 'Contact', description: 'Questions ab
 export default function ContactPage() {
   return (
     <>
-      <PageHero title="Contact" description="Questions about an order, a card or a collection? We usually reply within one business day." scene="plain" crumbs={[{ name: 'Home', href: '/' }, { name: 'Contact' }]} />
+      <PageHero title="Contact" description="Questions about an order, a card or a hoard? Send word and we will reply within one business day." scene="plain" crumbs={[{ name: 'Home', href: '/' }, { name: 'Contact' }]} />
       <Container className="max-w-2xl py-10 sm:py-14">
         <InquiryForm type="contact" />
       </Container>

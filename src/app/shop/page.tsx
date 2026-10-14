@@ -15,7 +15,7 @@ export default async function ShopPage() {
   const products = await getProducts();
   return (
     <>
-      <PageHero title="Shop All" flavour="The Whole Atlas" description="Every card, slab and sealed product currently in stock." scene="catalog" crumbs={[{ name: 'Home', href: '/' }, { name: 'Shop All' }]} />
+      <PageHero title="Shop All" flavour="The Whole Atlas" description="Every card, slab and sealed relic currently in the vault." scene="catalog" crumbs={[{ name: 'Home', href: '/' }, { name: 'Shop All' }]} />
       <Container className="py-8 sm:py-10">
         <Suspense fallback={<p className="py-20 text-center font-sans text-muted">Loading products…</p>}>
           <ShopBrowser products={products} />

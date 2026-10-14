@@ -38,7 +38,7 @@ export default async function HomePage() {
       <PromoBanner
         eyebrow="Riftbound"
         title="Riftbound New Arrivals"
-        text="Signed showcases, alt-arts and fresh sealed product – added regularly."
+        text="Signed showcases, alt-arts and fresh sealed relics from the arcane citadel – new finds added regularly."
         cta="Shop Now"
         href="/collections/riftbound"
         scene="riftbound"
@@ -47,13 +47,21 @@ export default async function HomePage() {
       <PromoBanner
         eyebrow="The Vault"
         title="Rare & High-End Pieces"
-        text="Top-grade slabs and premium singles, presented like museum artefacts."
+        text="Legendary slabs and premium singles, displayed like artefacts in a treasure hall."
         cta="Enter the Vault"
         href="/vault"
         scene="vault"
         premium
       />
       <TrustSection />
+      <PromoBanner
+        eyebrow="Sell to Atlas"
+        title="Sell Your Pristine Cards"
+        text="Bring your pristine legends to Atlas. Up to 100% of market value for cards worth €200 or more in perfect condition – no discount, no worries."
+        cta="Sell Your Cards"
+        href="/sell"
+        scene="sell"
+      />
       <StorySection />
       <RecentlyViewed />
     </>
