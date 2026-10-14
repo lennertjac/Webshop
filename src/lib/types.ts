@@ -1,7 +1,7 @@
 // Domain types for the storefront. Backend adapters map their payloads onto these.
 
 export type TcgId = 'pokemon' | 'riftbound' | 'one-piece' | 'magic' | 'other';
-export type ProductKind = 'single' | 'graded' | 'sealed' | 'other';
+export type ProductKind = 'single' | 'graded' | 'sealed' | 'collection' | 'accessory' | 'other';
 export type Availability = 'in-stock' | 'low-stock' | 'sold-out' | 'preorder';
 export type ProductTag = 'new' | 'low-stock' | 'rare' | 'sold-out' | 'preorder' | 'vault' | 'sale';
 
@@ -32,7 +32,8 @@ export interface Product {
   isNew: boolean;
   isVault: boolean;
   createdAt?: string;
-  popularity: number;
+  /** Items bundled into a collection product. */
+  contents?: { name: string; quantity: number; type: string }[];
   description?: string;
 }
 
@@ -49,7 +50,7 @@ export interface CartLine {
   gradingCompany?: string | null;
 }
 
-export type SortKey = 'featured' | 'newest' | 'price-asc' | 'price-desc' | 'popular';
+export type SortKey = 'featured' | 'newest' | 'price-asc' | 'price-desc';
 
 export interface ProductFilters {
   query?: string;

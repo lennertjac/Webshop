@@ -97,12 +97,20 @@ export const COLLECTIONS: Collection[] = [
     match: (p) => p.isNew,
   },
   {
-    slug: 'rare-high-end',
-    title: 'Rare & High-End',
-    flavour: 'The Treasure Chamber',
-    description: 'Premium singles, signed cards and top-grade slabs.',
-    scene: 'treasure',
-    match: (p) => p.isVault || p.tags.includes('rare'),
+    slug: 'bundles',
+    title: 'Collections',
+    flavour: 'Curated Sets',
+    description: 'Sets of cards, sealed product and accessories that are sold together.',
+    scene: 'story',
+    match: (p) => p.kind === 'collection',
+  },
+  {
+    slug: 'accessories',
+    title: 'Accessories',
+    flavour: 'The Gear Shop',
+    description: 'Binders, sleeves, playmats and other collector gear.',
+    scene: 'supply',
+    match: (p) => p.kind === 'accessory',
   },
   tcgCollection('pokemon', 'The Sunlit Meadows', 'Singles, graded cards and sealed product for Pokémon TCG.'),
   tcgCollection('riftbound', 'The Arcane Citadel', 'Signed showcases, alt-arts and sealed Riftbound product.'),
@@ -113,12 +121,27 @@ export const COLLECTIONS: Collection[] = [
 
 export const getCollection = (slug: string) => COLLECTIONS.find((c) => c.slug === slug);
 
-export const NAV_LINKS = [
-  { href: '/shop', label: 'Shop' },
-  { href: '/collections/cards', label: 'Cards' },
-  { href: '/collections/sealed', label: 'Sealed' },
+export const TCG_SLUGS = ['pokemon', 'riftbound', 'one-piece', 'magic-the-gathering', 'other-tcgs'];
+
+export interface NavLink {
+  href: string;
+  label: string;
+  children?: { href: string; label: string }[];
+}
+
+export const NAV_LINKS: NavLink[] = [
+  {
+    href: '/shop',
+    label: 'Shop',
+    children: [
+      { href: '/shop', label: 'All products' },
+      { href: '/collections/new-arrivals', label: 'New arrivals' },
+      ...COLLECTIONS.filter((c) => TCG_SLUGS.includes(c.slug)).map((c) => ({ href: `/collections/${c.slug}`, label: c.title })),
+    ],
+  },
+  { href: '/collections/singles', label: 'Singles' },
   { href: '/collections/graded', label: 'Graded' },
-  { href: '/collections', label: 'Collections' },
-  { href: '/collections/new-arrivals', label: 'New Arrivals' },
+  { href: '/collections/sealed', label: 'Sealed' },
+  { href: '/collections/bundles', label: 'Collections' },
   { href: '/vault', label: 'The Vault' },
-] as const;
+];

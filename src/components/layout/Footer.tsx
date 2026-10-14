@@ -23,9 +23,10 @@ const COLUMNS = [
     title: 'Shop',
     links: [
       ['Shop All', '/shop'],
-      ['Trading Cards', '/collections/cards'],
-      ['Sealed Products', '/collections/sealed'],
+      ['Singles', '/collections/singles'],
       ['Graded Cards', '/collections/graded'],
+      ['Sealed Products', '/collections/sealed'],
+      ['Collections', '/collections/bundles'],
       ['New Arrivals', '/collections/new-arrivals'],
       ['The Vault', '/vault'],
     ],

@@ -13,7 +13,7 @@ import { formatPrice } from '@/lib/config';
 import type { Product } from '@/lib/types';
 import { useRecent } from '@/store/preferences';
 
-const SUGGESTED = ['graded', 'sealed', 'new-arrivals', 'rare-high-end', 'riftbound', 'pokemon'];
+const SUGGESTED = ['graded', 'sealed', 'bundles', 'new-arrivals', 'riftbound', 'pokemon'];
 
 export function SearchPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
   const router = useRouter();

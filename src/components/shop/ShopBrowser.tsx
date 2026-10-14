@@ -29,7 +29,6 @@ const SORTS: { value: SortKey; label: string }[] = [
   { value: 'newest', label: 'Newest' },
   { value: 'price-asc', label: 'Price: Low to High' },
   { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'popular', label: 'Most Popular' },
 ];
 
 const PAGE_SIZE = 24;

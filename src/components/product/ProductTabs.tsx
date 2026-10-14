@@ -35,6 +35,25 @@ export function ProductTabs({ product }: { product: Product }) {
   ).filter(([, v]) => v);
 
   const tabs: { label: string; content: React.ReactNode }[] = [
+    ...(product.contents
+      ? [
+          {
+            label: 'What’s Included',
+            content: (
+              <ul className="divide-y divide-stone/60">
+                {product.contents.map((c) => (
+                  <li key={c.name} className="flex items-center justify-between gap-4 py-2.5">
+                    <span className="font-semibold text-navy">
+                      {c.quantity} × {c.name}
+                    </span>
+                    <span className="text-muted">{c.type}</span>
+                  </li>
+                ))}
+              </ul>
+            ),
+          },
+        ]
+      : []),
     {
       label: 'Description',
       content: <p>{product.description ?? `${product.name}${product.set ? ` from ${product.set}` : ''} – ${product.tcgLabel}. ${product.isGraded ? `Graded ${product.gradingCompany ?? ''} ${product.grade ?? ''}.` : `Condition: ${product.condition}.`} Checked and photographed by our team before listing.`}</p>,

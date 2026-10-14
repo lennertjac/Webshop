@@ -102,8 +102,6 @@ export function sortProducts(products: Product[], sort: SortKey): Product[] {
       return list.sort((a, b) => a.price - b.price);
     case 'price-desc':
       return list.sort((a, b) => b.price - a.price);
-    case 'popular':
-      return list.sort((a, b) => b.popularity - a.popularity);
     default:
       return list.sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured) || Number(a.stock === 0) - Number(b.stock === 0));
   }

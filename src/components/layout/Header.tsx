@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { AtlasMark } from '@/components/product/ProductImage';
 import { Sheet } from '@/components/ui/Sheet';
 import { useAuth } from '@/lib/auth-context';
-import { COLLECTIONS, NAV_LINKS } from '@/lib/collections';
+import { COLLECTIONS, NAV_LINKS, TCG_SLUGS } from '@/lib/collections';
 import { cartCount, useCart, useHydrated } from '@/store/cart';
 import { useWishlist } from '@/store/preferences';
 import { SearchPanel } from './SearchPanel';
@@ -84,7 +84,7 @@ export function Header() {
             {NAV_LINKS.map((l) => {
               const active = pathname === l.href || (l.href !== '/shop' && pathname.startsWith(`${l.href}/`));
               return (
-                <li key={l.href}>
+                <li key={l.href} className="group relative">
                   <Link
                     href={l.href}
                     aria-current={active ? 'page' : undefined}
@@ -96,6 +96,17 @@ export function Header() {
                   >
                     {l.label}
                   </Link>
+                  {l.children && (
+                    <ul className="invisible absolute left-0 top-full z-50 min-w-56 translate-y-1 rounded-xl border border-stone/70 bg-ivory p-2 opacity-0 shadow-card-hover transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                      {l.children.map((c) => (
+                        <li key={c.href}>
+                          <Link href={c.href} className="block rounded-lg px-3 py-2 font-sans text-sm font-medium text-ink hover:bg-navy/5 hover:text-arcane">
+                            {c.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               );
             })}
@@ -152,7 +163,7 @@ export function Header() {
             </ul>
             <p className="mb-2 mt-6 px-3 font-sans text-xs font-semibold uppercase tracking-wider text-muted">Shop by TCG</p>
             <ul className="space-y-1">
-              {COLLECTIONS.filter((c) => ['pokemon', 'riftbound', 'one-piece', 'magic-the-gathering', 'other-tcgs'].includes(c.slug)).map((c) => (
+              {COLLECTIONS.filter((c) => TCG_SLUGS.includes(c.slug)).map((c) => (
                 <li key={c.slug}>
                   <Link href={`/collections/${c.slug}`} onClick={() => setMenuOpen(false)} className="block rounded-lg px-3 py-2.5 font-sans text-sm text-ink hover:bg-navy/5">
                     {c.title}

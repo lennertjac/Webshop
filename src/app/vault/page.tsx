@@ -101,8 +101,8 @@ export default async function VaultPage() {
           <p className="py-16 text-center font-sans text-muted">The vault is being restocked. Explore the full catalog in the meantime.</p>
         )}
         <div className="mt-10 text-center">
-          <ButtonLink href="/collections/rare-high-end" variant="premium" size="lg">
-            Filter all rare &amp; high-end products
+          <ButtonLink href="/shop?min=250&sort=price-desc" variant="premium" size="lg">
+            Filter all products over €250
           </ButtonLink>
         </div>
       </Container>

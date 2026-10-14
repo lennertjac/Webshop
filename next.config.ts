@@ -9,7 +9,10 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    return [{ source: '/product/:id', destination: '/products/:id', permanent: true }];
+    return [
+      { source: '/product/:id', destination: '/products/:id', permanent: true },
+      { source: '/collections/rare-high-end', destination: '/vault', permanent: true },
+    ];
   },
 };
 

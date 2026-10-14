@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 import { PageHero } from '@/components/shop/PageHero';
 import { ShopBrowser, type ListKey } from '@/components/shop/ShopBrowser';
 import { Container } from '@/components/ui/primitives';
-import { COLLECTIONS, getCollection } from '@/lib/collections';
+import { COLLECTIONS, TCG_SLUGS, getCollection } from '@/lib/collections';
 import { newestFirst } from '@/lib/data/filter';
 import { getProducts } from '@/lib/data/products';
 import { JsonLd } from '@/components/ui/JsonLd';
@@ -36,7 +36,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
   // Until products carry a recent createdAt, still show the latest additions.
   if (collection.slug === 'new-arrivals' && !products.length) products = newestFirst(all).slice(0, 24);
 
-  const isTcg = ['pokemon', 'riftbound', 'one-piece', 'magic-the-gathering', 'other-tcgs'].includes(collection.slug);
+  const isTcg = TCG_SLUGS.includes(collection.slug);
   const hide: ListKey[] = isTcg ? ['tcg'] : [];
 
   return (

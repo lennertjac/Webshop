@@ -19,7 +19,7 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
 
   return (
     <div className="space-y-5">
-      {!soldOut && (
+      {!soldOut && product.stock > 1 && (
         <div className="flex items-center gap-3">
           <span className="font-sans text-sm font-semibold text-navy">Quantity</span>
           <QuantityStepper value={qty} max={product.stock} onChange={(n) => setQty(Math.max(1, Math.min(n, product.stock)))} label={product.name} />

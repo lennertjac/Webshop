@@ -18,7 +18,7 @@ export default async function HomePage() {
   const inStock = products.filter((p) => p.stock > 0);
   const heroCards = sortProducts(inStock, 'featured').filter((p) => p.images.length).slice(0, 3);
   const newArrivals = newestFirst(inStock).slice(0, 10);
-  const featured = sortProducts(inStock, 'featured').slice(0, 10);
+  const bundles = inStock.filter((p) => p.kind === 'collection').slice(0, 10);
 
   return (
     <>
@@ -43,7 +43,7 @@ export default async function HomePage() {
         href="/collections/riftbound"
         scene="riftbound"
       />
-      <ProductSection id="featured" title="Featured Collectibles" eyebrow="Hand-picked" products={featured} href="/shop" hrefLabel="Shop all products" variant="grid" tone="parchment" />
+      <ProductSection id="collections" title="Collections" eyebrow="Sold together" products={bundles} href="/collections/bundles" hrefLabel="View all collections" tone="parchment" />
       <PromoBanner
         eyebrow="The Vault"
         title="Rare & High-End Pieces"

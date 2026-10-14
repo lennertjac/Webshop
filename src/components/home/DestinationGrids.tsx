@@ -47,11 +47,11 @@ const countFor = (c: Collection, products: Product[]) => products.filter(c.match
 export function CategoryGrid({ products }: { products: Product[] }) {
   const pick = (slug: string) => COLLECTIONS.find((c) => c.slug === slug)!;
   const tiles: Tile[] = [
-    ...['singles', 'graded', 'sealed', 'new-arrivals', 'rare-high-end'].map((slug) => {
+    ...['singles', 'graded', 'sealed', 'bundles', 'new-arrivals'].map((slug) => {
       const c = pick(slug);
       return { href: `/collections/${c.slug}`, title: c.title, flavour: c.flavour, description: c.description, scene: c.scene, count: countFor(c, products) };
     }),
-    { href: '/shop', title: 'All Products', flavour: 'The Whole Atlas', description: 'Browse everything in stock with full filters.', scene: 'hero', count: products.length },
+    { href: '/vault', title: 'The Vault', flavour: 'The Treasure Chamber', description: 'Rare and high-end pieces, from €250.', scene: 'vault', count: products.filter((p) => p.isVault).length },
   ];
   return (
     <section aria-label="Shop by Category" className="py-12 sm:py-16">

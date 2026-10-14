@@ -25,12 +25,21 @@ export interface AtlasProduct {
   language?: string | null;
   compareAtPrice?: number | null;
   description?: string | null;
+  sealedType?: string | null;
+  contents?: { name: string; quantity: number; type: string }[] | null;
+}
+
+/** 'PSA 10 – Gem Mint' -> '10' so the badge can read 'PSA 10'. */
+function shortGrade(grade: string): string {
+  return grade.replace(/^(PSA|CGC|BGS|SGC|GAI)\s+/i, '').split(/\s+[–-]\s+|\s+/)[0] || grade;
 }
 
 function kindOf(raw: AtlasProduct, isGraded: boolean): ProductKind {
   const t = (raw.productType ?? '').toLowerCase();
   if (isGraded || t.includes('graded')) return 'graded';
-  if (/(sealed|booster|box|collection|deck|bundle|display|case)/.test(t)) return 'sealed';
+  if (t === 'collection') return 'collection';
+  if (raw.sealedType || /(sealed|booster|box|deck|bundle|display|case)/.test(t)) return 'sealed';
+  if (t.includes('accessor')) return 'accessory';
   if (t.includes('single')) return 'single';
   return 'other';
 }
@@ -43,7 +52,7 @@ function availabilityOf(qty: number, kind: ProductKind): Availability {
 }
 
 export function adaptProduct(raw: AtlasProduct): Product {
-  const grade = raw.grade && raw.grade !== 'Ungraded' ? raw.grade : null;
+  const grade = raw.grade && raw.grade !== 'Ungraded' ? shortGrade(raw.grade) : null;
   const isGraded = Boolean(raw.isGraded ?? grade);
   const tcg = detectTcg(raw.category);
   const kind = kindOf(raw, isGraded);
@@ -73,7 +82,7 @@ export function adaptProduct(raw: AtlasProduct): Product {
     tcg,
     tcgLabel: raw.category?.trim() || TCG_META[tcg].label,
     kind,
-    productType: raw.productType ?? 'Single Card',
+    productType: raw.sealedType ?? (raw.productType === 'Sealed Box' ? 'Booster Box' : raw.productType) ?? 'Single Card',
     condition: raw.condition && raw.condition !== 'Unknown' ? raw.condition : 'Not specified',
     gradingCompany: raw.gradingCompany,
     grade,
@@ -90,7 +99,7 @@ export function adaptProduct(raw: AtlasProduct): Product {
     isNew,
     isVault,
     createdAt: raw.createdAt ?? undefined,
-    popularity: (raw.isFeatured ? 1000 : 0) + raw.price / 10,
+    contents: raw.contents?.length ? raw.contents : undefined,
     description: raw.description ?? undefined,
   };
 }
