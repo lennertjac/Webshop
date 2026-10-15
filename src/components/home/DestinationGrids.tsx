@@ -47,7 +47,7 @@ const countFor = (c: Collection, products: Product[]) => products.filter(c.match
 export function CategoryGrid({ products }: { products: Product[] }) {
   const pick = (slug: string) => COLLECTIONS.find((c) => c.slug === slug)!;
   const tiles: Tile[] = [
-    ...['singles', 'graded', 'sealed', 'bundles', 'new-arrivals'].map((slug) => {
+    ...['singles', 'graded', 'sealed', 'bundles'].map((slug) => {
       const c = pick(slug);
       return { href: `/collections/${c.slug}`, title: c.title, flavour: c.flavour, description: c.description, scene: c.scene, count: countFor(c, products) };
     }),

@@ -24,7 +24,7 @@ export default function SellPage() {
       <PageHero
         title="Sell Your Cards"
         flavour="Bring your legends to Atlas"
-        description="Bring a legendary card or an entire hoard to Atlas and receive its full market value – no tribute, no discount."
+        description="Bring a legendary card or an entire collection to Atlas and receive its full market value – no tribute, no discount."
         scene="sell"
         crumbs={[{ name: 'Home', href: '/' }, { name: 'Sell to Us' }]}
       />

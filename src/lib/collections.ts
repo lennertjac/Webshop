@@ -53,18 +53,10 @@ const tcgCollection = (id: Exclude<TcgId, 'other'>, flavour: string, description
 
 export const COLLECTIONS: Collection[] = [
   {
-    slug: 'cards',
-    title: 'Trading Cards',
-    flavour: 'The Open Road',
-    description: 'Singles and graded cards from every world we stock.',
-    scene: 'catalog',
-    match: (p) => p.kind === 'single' || p.kind === 'graded',
-  },
-  {
     slug: 'singles',
     title: 'Singles',
     flavour: 'The Wayfarer’s Shelf',
-    description: 'Hand-checked cards, each one sleeved and ready to join your hoard.',
+    description: 'Hand-checked cards, each one sleeved and ready to join your collection.',
     scene: 'singles',
     match: (p) => p.kind === 'single',
   },
@@ -96,18 +88,11 @@ export const COLLECTIONS: Collection[] = [
     slug: 'bundles',
     title: 'Collections',
     flavour: 'Curated Sets',
-    description: 'Curated hoards of cards, sealed product and gear, gathered to be claimed together.',
+    description: 'Curated collections of cards, sealed product and gear, gathered to be claimed together.',
     scene: 'story',
     match: (p) => p.kind === 'collection',
   },
-  {
-    slug: 'accessories',
-    title: 'Accessories',
-    flavour: 'The Gear Shop',
-    description: 'Binders, sleeves and playmats – gear for every collector’s journey.',
-    scene: 'supply',
-    match: (p) => p.kind === 'accessory',
-  },
+
   tcgCollection('pokemon', 'The Sunlit Meadows', 'Legends of the sunlit meadows: Pokémon singles, graded slabs and sealed product.'),
   tcgCollection('riftbound', 'The Arcane Citadel', 'Relics of the arcane citadel: signed showcases, alt-arts and sealed Riftbound product.'),
   tcgCollection('one-piece', 'The Open Seas', 'Treasures of the open seas: One Piece singles, boxes and graded cards.'),
@@ -128,7 +113,6 @@ export const NAV_LINKS: NavLink[] = [
     href: '/shop',
     label: 'Shop',
     children: [
-      { href: '/shop', label: 'All products' },
       { href: '/collections/new-arrivals', label: 'New arrivals' },
       ...COLLECTIONS.filter((c) => TCG_SLUGS.includes(c.slug)).map((c) => ({ href: `/collections/${c.slug}`, label: c.title })),
     ],
